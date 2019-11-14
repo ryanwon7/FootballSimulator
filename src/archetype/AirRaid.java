@@ -2,8 +2,7 @@ package archetype;
 
 import plays.*;
 
-
-public class Smashmouth extends Archetype {
+public class AirRaid extends Archetype {
     public static int drive(int yardline) {
         int driveYardage, gainedYards, firstdown;
         int currYardline = yardline;
@@ -14,10 +13,7 @@ public class Smashmouth extends Archetype {
             for(int down=1; down<=4; down++) {
                 System.out.println(stateStatus(down, firstdown-currYardline, currYardline));
                 gainedYards = choosePlay();
-                if (down == 4) {
-                    System.out.println("Turnover on downs.");
-                    return 0;
-                } else if (gainedYards==10000) {
+                if (gainedYards==10000) {
                     System.out.println("Pass is Intercepted!");
                     return 0;
                 } else if (gainedYards==10001) {
@@ -25,7 +21,10 @@ public class Smashmouth extends Archetype {
                     return 0;
                 } else {
                     currYardline += gainedYards;
-                    if (currYardline >= 100) {
+                    if (down == 4) {
+                        System.out.println("Turnover on downs.");
+                        return 0;
+                    } else if (currYardline >= 100) {
                         System.out.println("Touchdown!");
                         return 7;
                     } else if (currYardline >= firstdown) {
@@ -34,7 +33,7 @@ public class Smashmouth extends Archetype {
                         break;
                     } else if (down==3) {
                         System.out.println(stateStatus(4, firstdown-currYardline, currYardline));
-                        if ((100-currYardline)<40) {
+                        if ((100-currYardline)<38) {
                             System.out.println("Attempting a field goal...");
                             if (FieldGoal.kick((100-currYardline))) {
                                 return 3;
@@ -53,19 +52,19 @@ public class Smashmouth extends Archetype {
     private static int choosePlay() {
         int gained;
         int playNum = getRandomInteger(1, 100);
-        if (playNum<=30) {
+        if (playNum<=15) {
             gained = SmashRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=60) {
+        } else if (playNum<=30) {
             gained = StretchRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=75) {
+        } else if (playNum<=55) {
             gained = ShortPass.pass();
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
@@ -73,7 +72,7 @@ public class Smashmouth extends Archetype {
                 System.out.println("It's a short pass for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=95) {
+        } else if (playNum<=80) {
             gained = MediumPass.pass();
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");

@@ -2,8 +2,7 @@ package archetype;
 
 import plays.*;
 
-
-public class Smashmouth extends Archetype {
+public class WestCoast extends Archetype {
     public static int drive(int yardline) {
         int driveYardage, gainedYards, firstdown;
         int currYardline = yardline;
@@ -53,13 +52,13 @@ public class Smashmouth extends Archetype {
     private static int choosePlay() {
         int gained;
         int playNum = getRandomInteger(1, 100);
-        if (playNum<=30) {
+        if (playNum<=10) {
             gained = SmashRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=60) {
+        } else if (playNum<=40) {
             gained = StretchRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
@@ -73,7 +72,7 @@ public class Smashmouth extends Archetype {
                 System.out.println("It's a short pass for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=95) {
+        } else if (playNum<=90) {
             gained = MediumPass.pass();
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");

@@ -8,15 +8,17 @@ public class StretchRun extends Play{
             System.out.println("Fumble!");
             return 10001;
         } else if (randNum <= 9) {
-            yardage = calcExp(-1, -4);
-        } else if (randNum <= 23) {
-            yardage = getRandomInteger(0, 2);
-        } else if (randNum <= 93) {
-            yardage = getRandomInteger(3, 5);
+            yardage = calcExp(-2, -4);
+        } else if (randNum <= 19) {
+            yardage = getRandomInteger(-1, 1);
+        } else if (randNum <= 90) {
+            yardage = getRandomInteger(2, 6);
+        } else if (randNum <= 95) {
+            yardage = getRandomInteger(7, 13);
         } else if (randNum <= 98) {
-            yardage = getRandomInteger(6, 10);
+            yardage = calcExp(14, 20);
         } else {
-            yardage = calcExp(11, 20);
+            yardage = calcExp(21, 100);
         }
         return yardage;
     }

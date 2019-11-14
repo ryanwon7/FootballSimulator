@@ -2,8 +2,7 @@ package archetype;
 
 import plays.*;
 
-
-public class Smashmouth extends Archetype {
+public class Spread extends Archetype {
     public static int drive(int yardline) {
         int driveYardage, gainedYards, firstdown;
         int currYardline = yardline;
@@ -36,7 +35,7 @@ public class Smashmouth extends Archetype {
                         System.out.println(stateStatus(4, firstdown-currYardline, currYardline));
                         if ((100-currYardline)<40) {
                             System.out.println("Attempting a field goal...");
-                            if (FieldGoal.kick((100-currYardline))) {
+                            if (FieldGoal.kick(100-currYardline)) {
                                 return 3;
                             } else {
                                 return 0;
@@ -53,19 +52,19 @@ public class Smashmouth extends Archetype {
     private static int choosePlay() {
         int gained;
         int playNum = getRandomInteger(1, 100);
-        if (playNum<=30) {
+        if (playNum<=20) {
             gained = SmashRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=60) {
+        } else if (playNum<=40) {
             gained = StretchRun.run();
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=75) {
+        } else if (playNum<=65) {
             gained = ShortPass.pass();
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
@@ -73,7 +72,7 @@ public class Smashmouth extends Archetype {
                 System.out.println("It's a short pass for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=95) {
+        } else if (playNum<=85) {
             gained = MediumPass.pass();
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");

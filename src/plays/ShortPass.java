@@ -1,7 +1,7 @@
 package plays;
 
 public class ShortPass extends Play{
-    public static int run() {
+    public static int pass() {
         int yardage;
         int randNum = Play.getRandomInteger(1, 100);
         if (randNum == 1) {
@@ -12,10 +12,10 @@ public class ShortPass extends Play{
             return 10000;
         } else if (randNum <= 6) {
             yardage = calcExp(1, -2);
-        } else if (randNum <= 73) {
+        } else if (randNum <= 60) {
             yardage = getRandomInteger(2, 6);
         } else if (randNum <= 78) {
-            yardage = getRandomInteger(7, 15);
+            yardage = calcExp(7, 15);
         } else if (randNum <= 99) {
             yardage = 0;
         } else {

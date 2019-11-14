@@ -1,7 +1,7 @@
 package plays;
 
 public class MediumPass extends Play {
-    public static int run() {
+    public static int pass() {
         int yardage;
         int randNum = Play.getRandomInteger(1, 100);
         if (randNum == 1) {
