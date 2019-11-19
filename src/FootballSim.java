@@ -21,11 +21,12 @@ public class FootballSim {
             "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets", "Oakland Raiders", "Philadelphia Eagles",
             "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Redskins"};
 
-    //
-    private int homeScore, awayScore, homeOff, homeDef, awayOff, awayDef;
+    //Variable Initializers
+    private int homeScore, awayScore;
+    private double homeOff, homeDef, homeSt, awayOff, awayDef, awaySt;
     private String jsonFile, homeTeam, awayTeam, homeAbrev, awayAbrev, homeStyle, awayStyle;
 
-    //System print settings
+    //System Print settings
     PrintStream originalStream = System.out;
     PrintStream dummyStream = new PrintStream(new OutputStream(){
         public void write(int b) {
@@ -57,13 +58,15 @@ public class FootballSim {
         JSONObject jo = (JSONObject) obj;
         JSONObject home = (JSONObject) jo.get(homeTeam.replace(" ", ""));
         homeAbrev = home.get("abrev").toString();
-        homeOff = ((Number) home.get("off")).intValue();
-        homeDef = ((Number) home.get("def")).intValue();
+        homeOff = ((Number) home.get("off")).doubleValue();
+        homeDef = ((Number) home.get("def")).doubleValue();
+        homeSt = ((Number) home.get("st")).doubleValue();
         homeStyle = home.get("style").toString();
         JSONObject away = (JSONObject) jo.get(awayTeam.replace(" ", ""));
         awayAbrev = away.get("abrev").toString();
-        awayOff = ((Number) away.get("off")).intValue();
-        awayDef = ((Number) away.get("def")).intValue();
+        awayOff = ((Number) away.get("off")).doubleValue();
+        awayDef = ((Number) away.get("def")).doubleValue();
+        awaySt = ((Number) away.get("st")).doubleValue();
         awayStyle = away.get("style").toString();
     }
     private void createGame() {

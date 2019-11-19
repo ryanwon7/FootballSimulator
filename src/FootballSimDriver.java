@@ -4,7 +4,7 @@
  */
 public class FootballSimDriver {
     public static void main(String[] args) throws Exception {
-        String teamfile = "current_teams.json";
+        String teamfile = "base_teams.json";
 
         FootballSim game = new FootballSim(teamfile, "yes");
         game.play();
