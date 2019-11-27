@@ -97,6 +97,7 @@ public class UpdateStrengths {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
         String filename = System.getProperty("user.dir") + File.separator + "resources" + File.separator + "teams_" + formatter.format(date) + ".json";
+        SimUtil.setProperties("sim.properties", "latest.file", filename);
         PrintWriter pw = new PrintWriter(filename);
         pw.write(joWrite.toJSONString());
 

@@ -1,9 +1,15 @@
+import archetype.AirRaid;
+import archetype.Smashmouth;
+import archetype.Spread;
+import archetype.WestCoast;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 //https://stackoverflow.com/questions/8363493/hiding-system-out-print-calls-of-a-class
@@ -26,11 +32,16 @@ public class FootballSim {
     private double homeOff, homeDef, homeSt, awayOff, awayDef, awaySt;
     private String jsonFile, homeTeam, awayTeam, homeAbrev, awayAbrev, homeStyle, awayStyle;
 
+    // Game Variables
+    private String possession = "home";
+    private int lastYardLine = 25;
+    private int homeQ1 = 0, homeQ2 = 0, homeQ3 = 0, homeQ4 = 0, awayQ1 = 0, awayQ2 = 0, awayQ3 = 0, awayQ4 = 0;
+
     //System Print settings
     PrintStream originalStream = System.out;
     PrintStream dummyStream = new PrintStream(new OutputStream(){
         public void write(int b) {
-            // NO-OP
+
         }
     });
 
@@ -70,5 +81,90 @@ public class FootballSim {
         awayStyle = away.get("style").toString();
     }
     private void createGame() {
+        homeScore = 0;
+        awayScore = 0;
+        for(int quarter = 1; quarter<=quarters; quarter++) {
+            System.out.println("\nStart of the " + quarter + " quarter.");
+            if (quarter==3) {
+                possession = "away";
+                lastYardLine = 25;
+            }
+            for (int possessions = 1; possessions<=5; possessions++) {
+                if (possession.equals("home")) {
+                    System.out.println("\n" + homeAbrev + " has possession.");
+                    doDrive(homeStyle, lastYardLine);
+                } else {
+                    System.out.println("\n" + awayAbrev + " has possession.");
+                    doDrive(awayStyle,lastYardLine);
+                }
+            }
+            getQuarterScore(quarter);
+        }
+        printSummary();
+    }
+    private void doDrive(String driveType, int yardLine) {
+        HashMap<String, String> returnData;
+        if (driveType.equals("Air Raid")) {
+            returnData =  AirRaid.drive(yardLine);
+        } else if (driveType.equals("Smashmouth")) {
+            returnData =  Smashmouth.drive(yardLine);
+        } else if (driveType.equals("Spread")) {
+            returnData =  Spread.drive(yardLine);
+        } else {
+            returnData =  WestCoast.drive(yardLine);
+        }
+        if (returnData.get("Code").equals("Interception") || returnData.get("Code").equals("Fumble") || returnData.get("Code").equals("Turnover on Downs") || returnData.get("Code").equals("Punt")) {
+            setTurnover();
+            lastYardLine = Integer.parseInt(returnData.get("Yardline"));
+        } else if (returnData.get("Code").equals("Touchdown") || returnData.get("Code").equals("Field Goal")) {
+            addPoints(Integer.parseInt(returnData.get("Points")));
+            System.out.println("\n" + homeAbrev + " " + homeScore + " - " + awayScore + " " + awayAbrev);
+            setTurnover();
+            lastYardLine = Integer.parseInt(returnData.get("Yardline"));
+        }
+    }
+    private void setTurnover() {
+        if (possession.equals("home")) {
+            possession = "away";
+        } else {
+            possession = "home";
+        }
+    }
+    private void addPoints(int points) {
+        if (possession.equals("home")) {
+            homeScore += points;
+        } else {
+            awayScore += points;
+        }
+    }
+    private void getQuarterScore(int quarter) {
+        if (quarter == 1) {
+            homeQ1 = homeScore;
+            awayQ1 = awayScore;
+        } else if (quarter == 2) {
+            homeQ2 = homeScore - homeQ1;
+            awayQ2 = awayScore - awayQ1;
+        } else if (quarter == 3) {
+            homeQ3 = homeScore - homeQ1 - homeQ2;
+            awayQ3 = awayScore - awayQ1 - awayQ2;
+        } else {
+            homeQ4 = homeScore - homeQ1 - homeQ2 - homeQ3;
+            awayQ4 = awayScore - awayQ1 - awayQ2 - homeQ3;
+        }
+    }
+    private void printSummary() {
+        System.setOut(originalStream);
+        System.out.println("\nFinal Score:\n" + homeAbrev + " " + homeScore + " - " + awayScore + " " + awayAbrev);
+        System.out.println("\nBox Score");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.printf("%20s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "FIN");
+        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("%20s %10s %10s %10s %10s %10s",
+                homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeScore);
+        System.out.println();
+        System.out.format("%20s %10s %10s %10s %10s %10s",
+                awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayScore);
+        System.out.println();
     }
 }

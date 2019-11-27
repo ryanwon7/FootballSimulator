@@ -4,9 +4,9 @@
  */
 public class FootballSimDriver {
     public static void main(String[] args) throws Exception {
-        String teamfile = "base_teams.json";
+        String teamfile = SimUtil.getProperties("sim.properties").getProperty("latest.file");
 
-        FootballSim game = new FootballSim(teamfile, "yes");
+        FootballSim game = new FootballSim(teamfile, "no");
         game.play();
         /*int test = 0;
         int totScore = 0;
