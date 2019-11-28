@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AirRaid extends Archetype {
-    public static HashMap<String, String> drive(int yardline) {
+    public static HashMap<String, String> drive(int yardline, int strength) {
         HashMap<String, String> returnData= new HashMap<String, String>();
         int gainedYards, firstdown;
         int currYardline = yardline;
@@ -19,7 +19,7 @@ public class AirRaid extends Archetype {
             }
             for(int down=1; down<=4; down++) {
                 System.out.println(stateStatus(down, firstdown-currYardline, currYardline));
-                gainedYards = choosePlay();
+                gainedYards = choosePlay(strength);
                 if (gainedYards==10000) {
                     System.out.println("Pass is Intercepted!");
                     returnData.put("Code", "Interception");
@@ -78,23 +78,23 @@ public class AirRaid extends Archetype {
             }
         }
     }
-    private static int choosePlay() {
+    private static int choosePlay(int strength) {
         int gained;
         int playNum = getRandomInteger(1, 100);
         if (playNum<=15) {
-            gained = SmashRun.run();
+            gained = SmashRun.run(strength);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
         } else if (playNum<=30) {
-            gained = StretchRun.run();
+            gained = StretchRun.run(strength);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
         } else if (playNum<=55) {
-            gained = ShortPass.pass();
+            gained = ShortPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
             } else if (gained != 10000 && gained != 10001) {
@@ -102,7 +102,7 @@ public class AirRaid extends Archetype {
             }
             return gained;
         } else if (playNum<=80) {
-            gained = MediumPass.pass();
+            gained = MediumPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");
             } else if (gained != 10000 && gained != 10001) {
@@ -110,7 +110,7 @@ public class AirRaid extends Archetype {
             }
             return gained;
         } else {
-            gained = DeepPass.pass();
+            gained = DeepPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete deep pass!");
             } else if (gained != 10000 && gained != 10001) {

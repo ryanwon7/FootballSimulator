@@ -1,7 +1,7 @@
 package plays;
 
 public class ShortPass extends Play{
-    public static int pass() {
+    public static int pass(int strength) {
         int yardage;
         int randNum = Play.getRandomInteger(1, 100);
         if (randNum == 1) {
@@ -11,11 +11,11 @@ public class ShortPass extends Play{
             System.out.println("Interception!");
             return 10000;
         } else if (randNum <= 6) {
-            yardage = calcExp(1, -2);
-        } else if (randNum <= 60) {
-            yardage = getRandomInteger(2, 6);
-        } else if (randNum <= 78) {
-            yardage = calcExp(7, 15);
+            yardage = calcExp(1+strength, -2);
+        } else if (randNum <= 59) {
+            yardage = getRandomInteger(2, 6+strength);
+        } else if (randNum <= 76) {
+            yardage = calcExp(7, 15+strength);
         } else if (randNum <= 99) {
             yardage = 0;
         } else {

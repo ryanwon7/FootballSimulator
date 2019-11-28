@@ -28,14 +28,15 @@ public class FootballSim {
             "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Redskins"};
 
     //Variable Initializers
-    private int homeScore, awayScore;
+    private int homeScore, awayScore, homeOffStr, awayOffStr;
     private double homeOff, homeDef, homeSt, awayOff, awayDef, awaySt;
     private String jsonFile, homeTeam, awayTeam, homeAbrev, awayAbrev, homeStyle, awayStyle;
+    private boolean ot = false;
 
     // Game Variables
     private String possession = "home";
     private int lastYardLine = 25;
-    private int homeQ1 = 0, homeQ2 = 0, homeQ3 = 0, homeQ4 = 0, awayQ1 = 0, awayQ2 = 0, awayQ3 = 0, awayQ4 = 0;
+    private int homeQ1 = 0, homeQ2 = 0, homeQ3 = 0, homeQ4 = 0, homeOt = 0, awayQ1 = 0, awayQ2 = 0, awayQ3 = 0, awayQ4 = 0, awayOt = 0;
 
     //System Print settings
     PrintStream originalStream = System.out;
@@ -43,7 +44,7 @@ public class FootballSim {
         public void write(int b) {
 
         }
-    });
+});
 
     public FootballSim(String teamfile, String stream) {
         homeScore = 0;
@@ -83,35 +84,64 @@ public class FootballSim {
     private void createGame() {
         homeScore = 0;
         awayScore = 0;
+        homeOffStr = (int) Math.ceil((homeOff + 2 - awayDef)/5);
+        awayOffStr = (int) Math.ceil((awayOff + 2 - homeDef)/5);
         for(int quarter = 1; quarter<=quarters; quarter++) {
             System.out.println("\nStart of the " + quarter + " quarter.");
             if (quarter==3) {
                 possession = "away";
                 lastYardLine = 25;
             }
-            for (int possessions = 1; possessions<=5; possessions++) {
+            for (int possessions = 1; possessions<=4; possessions++) {
                 if (possession.equals("home")) {
                     System.out.println("\n" + homeAbrev + " has possession.");
-                    doDrive(homeStyle, lastYardLine);
+                    doDrive(homeStyle, lastYardLine, homeOffStr);
                 } else {
                     System.out.println("\n" + awayAbrev + " has possession.");
-                    doDrive(awayStyle,lastYardLine);
+                    doDrive(awayStyle,lastYardLine, awayOffStr);
                 }
             }
             getQuarterScore(quarter);
+            if (quarter ==4 && homeScore == awayScore) {
+                System.out.println("\nStart of the overtime.");
+                ot = true;
+                lastYardLine=25;
+                int headsTails = (int)(Math.random() * (2) + 1);
+                if (headsTails == 1) {
+                    possession = "home";
+                } else {
+                    possession = "away";
+                }
+                for (int drives = 1; drives <= 6; drives++) {
+                    if (possession.equals("home")) {
+                        System.out.println("\n" + homeAbrev + " has possession.");
+                        doDrive(homeStyle, lastYardLine, homeOffStr);
+                    } else {
+                        System.out.println("\n" + awayAbrev + " has possession.");
+                        doDrive(awayStyle,lastYardLine, awayOffStr);
+                    }
+                    if (drives == 1 && (homeScore == awayScore + 7 || homeScore + 7 == awayScore)) {
+                        getQuarterScore(5);
+                        break;
+                    } else if (homeScore != awayScore) {
+                        getQuarterScore(5);
+                        break;
+                    }
+                }
+            }
         }
         printSummary();
     }
-    private void doDrive(String driveType, int yardLine) {
+    private void doDrive(String driveType, int yardLine, int strength) {
         HashMap<String, String> returnData;
         if (driveType.equals("Air Raid")) {
-            returnData =  AirRaid.drive(yardLine);
+            returnData =  AirRaid.drive(yardLine, strength);
         } else if (driveType.equals("Smashmouth")) {
-            returnData =  Smashmouth.drive(yardLine);
+            returnData =  Smashmouth.drive(yardLine, strength);
         } else if (driveType.equals("Spread")) {
-            returnData =  Spread.drive(yardLine);
+            returnData =  Spread.drive(yardLine, strength);
         } else {
-            returnData =  WestCoast.drive(yardLine);
+            returnData =  WestCoast.drive(yardLine, strength);
         }
         if (returnData.get("Code").equals("Interception") || returnData.get("Code").equals("Fumble") || returnData.get("Code").equals("Turnover on Downs") || returnData.get("Code").equals("Punt")) {
             setTurnover();
@@ -147,24 +177,42 @@ public class FootballSim {
         } else if (quarter == 3) {
             homeQ3 = homeScore - homeQ1 - homeQ2;
             awayQ3 = awayScore - awayQ1 - awayQ2;
-        } else {
+        } else if (quarter == 4){
             homeQ4 = homeScore - homeQ1 - homeQ2 - homeQ3;
-            awayQ4 = awayScore - awayQ1 - awayQ2 - homeQ3;
+            awayQ4 = awayScore - awayQ1 - awayQ2 - awayQ3;
+        } else {
+            homeOt = homeScore - homeQ1 - homeQ2 - homeQ3 - homeQ4;
+            awayOt = awayScore - awayQ1 - awayQ2 - awayQ3 - awayQ4;
         }
     }
     private void printSummary() {
         System.setOut(originalStream);
         System.out.println("\nFinal Score:\n" + homeAbrev + " " + homeScore + " - " + awayScore + " " + awayAbrev);
-        System.out.println("\nBox Score");
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%20s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "FIN");
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("%20s %10s %10s %10s %10s %10s",
-                homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeScore);
-        System.out.println();
-        System.out.format("%20s %10s %10s %10s %10s %10s",
-                awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayScore);
-        System.out.println();
+        if (!ot) {
+            System.out.println("\nBox Score");
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.printf("%20s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "FIN");
+            System.out.println();
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.format("%20s %10s %10s %10s %10s %10s",
+                    homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeScore);
+            System.out.println();
+            System.out.format("%20s %10s %10s %10s %10s %10s",
+                    awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayScore);
+            System.out.println();
+        } else {
+            System.out.println("\nBox Score");
+            System.out.println("-----------------------------------------------------------------------------------------");
+            System.out.printf("%20s %10s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "OT", "FIN");
+            System.out.println();
+            System.out.println("-----------------------------------------------------------------------------------------");
+            System.out.format("%20s %10s %10s %10s %10s %10s %10s ",
+                    homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeOt, homeScore);
+            System.out.println();
+            System.out.format("%20s %10s %10s %10s %10s %10s %10s",
+                    awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayOt, awayScore);
+            System.out.println();
+        }
+
     }
 }
