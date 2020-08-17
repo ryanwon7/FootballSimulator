@@ -1,195 +1,226 @@
 {
-  "teams": [{
-    "team": "Buffalo Bills",
+  "BuffaloBills": {
     "abrev": "BUF",
     "off": 71,
     "def": 80,
+    "st": 0.0,
     "style": "Smashmouth"
-}, {
-    "team": "Miami Dolphins",
+  },
+  "MiamiDolphins": {
     "abrev": "MIA",
     "off": 69,
     "def": 72,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "New England Patriots",
+  },
+  "NewEnglandPatriots": {
     "abrev": "NE",
     "off": 91,
     "def": 84,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "New York Jets",
+  },
+  "NewYorkJets": {
     "abrev": "NYJ",
     "off": 73,
     "def": 80,
+    "st": 0.0,
     "style": "West Coast"
-  }, {
-    "team": "Denver Broncos",
+  },
+  "DenverBroncos": {
     "abrev": "DEN",
     "off": 75,
     "def": 84,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Kansas City Chiefs",
+  },
+  "KansasCityChiefs": {
     "abrev": "KC",
     "off": 88,
     "def": 78,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Los Angeles Chargers",
+  },
+  "LosAngelesChargers": {
     "abrev": "LAC",
     "off": 87,
     "def": 84,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Oakland Raiders",
-    "abrev": "OAK",
+  },
+  "LasVegasRaiders": {
+    "abrev": "LV",
     "off": 82,
     "def": 74,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Baltimore Ravens",
+  },
+  "BaltimoreRavens": {
     "abrev": "BAL",
     "off": 75,
     "def": 84,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Cincinatti Bengals",
+  },
+  "CincinnatiBengals": {
     "abrev": "CIN",
     "off": 78,
     "def": 78,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Cleveland Browns",
+  },
+  "ClevelandBrowns": {
     "abrev": "CLE",
     "off": 83,
     "def": 82,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Pittsburgh Steelers",
+  },
+  "PittsburghSteelers": {
     "abrev": "PIT",
     "off": 85,
     "def": 80,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Houston Texans",
+  },
+  "HoustonTexans": {
     "abrev": "HOU",
     "off": 78,
     "def": 88,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Indianapolis Colts",
+  },
+  "IndianapolisColts": {
     "abrev": "IND",
     "off": 91,
     "def": 78,
+    "st": 0.0,
     "style": "West Coast"
-  }, {
-    "team": "Jacksonville Jaguars",
-    "abrev": "JAX",
+  },
+  "JacksonvilleJaguars": {
+    "abrev": "JAC",
     "off": 71,
     "def": 82,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Tennessee Titans",
+  },
+  "TennesseeTitans": {
     "abrev": "TEN",
     "off": 78,
     "def": 82,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Dallas Cowboys",
+  },
+  "DallasCowboys": {
     "abrev": "DAL",
     "off": 86,
     "def": 86,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "New York Giants",
+  },
+  "NewYorkGiants": {
     "abrev": "NYG",
     "off": 75,
     "def": 72,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Philadelphia Eagles",
+  },
+  "PhiladelphiaEagles": {
     "abrev": "PHI",
     "off": 87,
     "def": 84,
+    "st": 0.0,
     "style": "West Coast"
-  }, {
-    "team": "Washington Redskins",
+  },
+  "WashingtonRedskins": {
     "abrev": "WAS",
     "off": 75,
     "def": 80,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Arizona Cardinals",
+  },
+  "ArizonaCardinals": {
     "abrev": "ARI",
     "off": 73,
     "def": 80,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Los Angeles Rams",
+  },
+  "LosAngelesRams": {
     "abrev": "LAR",
     "off": 83,
     "def": 86,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "San Francisco 49ers",
+  },
+  "SanFrancisco49ers": {
     "abrev": "SF",
     "off": 80,
     "def": 82,
+    "st": 0.0,
     "style": "West Coast"
-  }, {
-    "team": "Seattle Seahawks",
+  },
+  "SeattleSeahawks": {
     "abrev": "SEA",
     "off": 80,
     "def": 80,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Chicago Bears",
+  },
+  "ChicagoBears": {
     "abrev": "CHI",
     "off": 76,
     "def": 88,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Detroit Lions",
+  },
+  "DetroitLions": {
     "abrev": "DET",
     "off": 76,
     "def": 80,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Green Bay Packers",
+  },
+  "GreenBayPackers": {
     "abrev": "GB",
     "off": 89,
     "def": 84,
+    "st": 0.0,
     "style": "Spread"
-  }, {
-    "team": "Minnesota Vikings",
+  },
+  "MinnesotaVikings": {
     "abrev": "MIN",
     "off": 80,
     "def": 86,
+    "st": 0.0,
     "style": "Smashmouth"
-  }, {
-    "team": "Atlanta Falcons",
+  },
+  "AtlantaFalcons": {
     "abrev": "ATL",
     "off": 89,
     "def": 82,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Carolina Panthers",
+  },
+  "CarolinaPanthers": {
     "abrev": "CAR",
     "off": 82,
     "def": 82,
+    "st": 0.0,
     "style": "West Coast"
-  }, {
-    "team": "New Orleans Saints",
+  },
+  "NewOrleansSaints": {
     "abrev": "NO",
     "off": 92,
     "def": 82,
+    "st": 0.0,
     "style": "Air Raid"
-  }, {
-    "team": "Tampa Bay Buccaneers",
+  },
+  "TampaBayBuccaneers": {
     "abrev": "TB",
     "off": 76,
     "def": 74,
+    "st": 0.0,
     "style": "Air Raid"
-  }]
+  }
 }

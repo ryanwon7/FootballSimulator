@@ -2,70 +2,99 @@ package archetype;
 
 import plays.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WestCoast extends Archetype {
-    public static int drive(int yardline) {
-        int driveYardage, gainedYards, firstdown;
+    public static HashMap<String, String> drive(int yardline, int strength) {
+        HashMap<String, String> returnData= new HashMap<String, String>();
+        int gainedYards, firstdown;
         int currYardline = yardline;
-        boolean possession = true;
 
         while (true) {
-            firstdown = currYardline + 10;
+            if (currYardline+10 > 100) {
+                firstdown = 100;
+            } else {
+                firstdown = currYardline + 10;
+            }
             for(int down=1; down<=4; down++) {
                 System.out.println(stateStatus(down, firstdown-currYardline, currYardline));
-                gainedYards = choosePlay();
-                if (down == 4) {
-                    System.out.println("Turnover on downs.");
-                    return 0;
-                } else if (gainedYards==10000) {
+                gainedYards = choosePlay(strength);
+                if (gainedYards==10000) {
                     System.out.println("Pass is Intercepted!");
-                    return 0;
+                    returnData.put("Code", "Interception");
+                    returnData.put("Points", "0");
+                    returnData.put("Yardline", "" + (100-currYardline));
+                    return returnData;
                 } else if (gainedYards==10001) {
                     System.out.println("Ball is fumbled! Turn over!");
-                    return 0;
+                    returnData.put("Code", "Fumble");
+                    returnData.put("Points", "0");
+                    returnData.put("Yardline", "" + (100-currYardline));
+                    return returnData;
                 } else {
                     currYardline += gainedYards;
                     if (currYardline >= 100) {
                         System.out.println("Touchdown!");
-                        return 7;
+                        returnData.put("Code", "Touchdown");
+                        returnData.put("Points", "7");
+                        returnData.put("Yardline", "25");
+                        return returnData;
                     } else if (currYardline >= firstdown) {
                         break;
+                    } else if (down == 4) {
+                        System.out.println("Turnover on Downs.");
+                        returnData.put("Code", "Turnover on Downs");
+                        returnData.put("Points", "0");
+                        returnData.put("Yardline", "" + (100-currYardline));
+                        return returnData;
                     } else if (down==3 && (firstdown-currYardline)<=2 && (100-currYardline) < 45) {
-                        break;
+                        continue;
                     } else if (down==3) {
                         System.out.println(stateStatus(4, firstdown-currYardline, currYardline));
-                        if ((100-currYardline)<40) {
+                        int oppLine = 100 - currYardline;
+                        if (oppLine<38) {
                             System.out.println("Attempting a field goal...");
                             if (FieldGoal.kick((100-currYardline))) {
-                                return 3;
+                                returnData.put("Code", "Field Goal");
+                                returnData.put("Points", "3");
+                                returnData.put("Yardline", "25");
+                                return returnData;
                             } else {
-                                return 0;
+                                returnData.put("Code", "Turnover on Downs");
+                                returnData.put("Points", "0");
+                                returnData.put("Yardline", "" + oppLine);
+                                return returnData;
                             }
                         } else {
                             System.out.println("Team is punting.");
-                            return 0;
+                            returnData.put("Code", "Punt");
+                            returnData.put("Points", "0");
+                            returnData.put("Yardline", "" + Punt.kick(currYardline));
+                            return returnData;
                         }
                     }
                 }
             }
         }
     }
-    private static int choosePlay() {
+    private static int choosePlay(int strength) {
         int gained;
         int playNum = getRandomInteger(1, 100);
         if (playNum<=10) {
-            gained = SmashRun.run();
+            gained = SmashRun.run(strength);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
         } else if (playNum<=40) {
-            gained = StretchRun.run();
+            gained = StretchRun.run(strength+1);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
         } else if (playNum<=75) {
-            gained = ShortPass.pass();
+            gained = ShortPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
             } else if (gained != 10000 && gained != 10001) {
@@ -73,7 +102,7 @@ public class WestCoast extends Archetype {
             }
             return gained;
         } else if (playNum<=90) {
-            gained = MediumPass.pass();
+            gained = MediumPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");
             } else if (gained != 10000 && gained != 10001) {
@@ -81,7 +110,7 @@ public class WestCoast extends Archetype {
             }
             return gained;
         } else {
-            gained = DeepPass.pass();
+            gained = DeepPass.pass(strength);
             if (gained == 0) {
                 System.out.println("Incomplete deep pass!");
             } else if (gained != 10000 && gained != 10001) {
