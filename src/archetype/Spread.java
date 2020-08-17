@@ -34,13 +34,7 @@ public class Spread extends Archetype {
                     return returnData;
                 } else {
                     currYardline += gainedYards;
-                    if (down == 4) {
-                        System.out.println("Turnover on Downs.");
-                        returnData.put("Code", "Turnover on Downs");
-                        returnData.put("Points", "0");
-                        returnData.put("Yardline", "" + (100-currYardline));
-                        return returnData;
-                    } else if (currYardline >= 100) {
+                    if (currYardline >= 100) {
                         System.out.println("Touchdown!");
                         returnData.put("Code", "Touchdown");
                         returnData.put("Points", "7");
@@ -48,8 +42,14 @@ public class Spread extends Archetype {
                         return returnData;
                     } else if (currYardline >= firstdown) {
                         break;
+                    } else if (down == 4) {
+                        System.out.println("Turnover on Downs.");
+                        returnData.put("Code", "Turnover on Downs");
+                        returnData.put("Points", "0");
+                        returnData.put("Yardline", "" + (100-currYardline));
+                        return returnData;
                     } else if (down==3 && (firstdown-currYardline)<=2 && (100-currYardline) < 45) {
-                        break;
+                        continue;
                     } else if (down==3) {
                         System.out.println(stateStatus(4, firstdown-currYardline, currYardline));
                         int oppLine = 100 - currYardline;

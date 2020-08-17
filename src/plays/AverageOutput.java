@@ -8,7 +8,7 @@ public class AverageOutput {
         int fumbles = 0;
 
         while (startPlays < 1000000) {
-            int gained = StretchRun.run(3);
+            int gained = StretchRun.run(0);
             if (gained == 10000){
                 interceptions++;
                 continue;

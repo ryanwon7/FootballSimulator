@@ -24,7 +24,7 @@ public class FootballSim {
     private final String[] teams = {"Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills", "Carolina Panthers", "Chicago Bears",
             "Cincinnati Bengals", "Cleveland Browns", "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers", "Houston Texans",
             "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins",
-            "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets", "Oakland Raiders", "Philadelphia Eagles",
+            "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets", "Las Vegas Raiders", "Philadelphia Eagles",
             "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Redskins"};
 
     //Variable Initializers
@@ -84,15 +84,15 @@ public class FootballSim {
     private void createGame() {
         homeScore = 0;
         awayScore = 0;
-        homeOffStr = (int) Math.ceil((homeOff + 2 - awayDef)/5);
-        awayOffStr = (int) Math.ceil((awayOff + 2 - homeDef)/5);
+        homeOffStr = (int) Math.ceil((homeOff + 1 - awayDef)/4);
+        awayOffStr = (int) Math.ceil((awayOff - homeDef-1)/4);
         for(int quarter = 1; quarter<=quarters; quarter++) {
             System.out.println("\nStart of the " + quarter + " quarter.");
             if (quarter==3) {
                 possession = "away";
                 lastYardLine = 25;
             }
-            for (int possessions = 1; possessions<=4; possessions++) {
+            for (int possessions = 1; possessions<=5; possessions++) {
                 if (possession.equals("home")) {
                     System.out.println("\n" + homeAbrev + " has possession.");
                     doDrive(homeStyle, lastYardLine, homeOffStr);
@@ -112,7 +112,7 @@ public class FootballSim {
                 } else {
                     possession = "away";
                 }
-                for (int drives = 1; drives <= 6; drives++) {
+                for (int drives = 1; drives <= 7; drives++) {
                     if (possession.equals("home")) {
                         System.out.println("\n" + homeAbrev + " has possession.");
                         doDrive(homeStyle, lastYardLine, homeOffStr);
