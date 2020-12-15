@@ -4,14 +4,14 @@
     "off": 71,
     "def": 80,
     "st": 0.0,
-    "style": "Smashmouth"
+    "style": "Spread"
   },
   "MiamiDolphins": {
     "abrev": "MIA",
     "off": 69,
     "def": 72,
     "st": 0.0,
-    "style": "Spread"
+    "style": "West Coast"
   },
   "NewEnglandPatriots": {
     "abrev": "NE",
@@ -32,7 +32,7 @@
     "off": 75,
     "def": 84,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Smashmouth"
   },
   "KansasCityChiefs": {
     "abrev": "KC",
@@ -46,14 +46,14 @@
     "off": 87,
     "def": 84,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Air Raid"
   },
   "LasVegasRaiders": {
     "abrev": "LV",
     "off": 82,
     "def": 74,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Smashmouth"
   },
   "BaltimoreRavens": {
     "abrev": "BAL",
@@ -74,7 +74,7 @@
     "off": 83,
     "def": 82,
     "st": 0.0,
-    "style": "Air Raid"
+    "style": "Smashmouth"
   },
   "PittsburghSteelers": {
     "abrev": "PIT",
@@ -88,28 +88,28 @@
     "off": 78,
     "def": 88,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Air Raid"
   },
   "IndianapolisColts": {
     "abrev": "IND",
     "off": 91,
     "def": 78,
     "st": 0.0,
-    "style": "West Coast"
+    "style": "Spread"
   },
   "JacksonvilleJaguars": {
     "abrev": "JAC",
     "off": 71,
     "def": 82,
     "st": 0.0,
-    "style": "Smashmouth"
+    "style": "West Coast"
   },
   "TennesseeTitans": {
     "abrev": "TEN",
     "off": 78,
     "def": 82,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Smashmouth"
   },
   "DallasCowboys": {
     "abrev": "DAL",
@@ -132,7 +132,7 @@
     "st": 0.0,
     "style": "West Coast"
   },
-  "WashingtonRedskins": {
+  "Washington": {
     "abrev": "WAS",
     "off": 75,
     "def": 80,
@@ -151,35 +151,35 @@
     "off": 83,
     "def": 86,
     "st": 0.0,
-    "style": "Spread"
+    "style": "Air Raid"
   },
   "SanFrancisco49ers": {
     "abrev": "SF",
     "off": 80,
     "def": 82,
     "st": 0.0,
-    "style": "West Coast"
+    "style": "Smashmouth"
   },
   "SeattleSeahawks": {
     "abrev": "SEA",
     "off": 80,
     "def": 80,
     "st": 0.0,
-    "style": "Smashmouth"
+    "style": "Air Raid"
   },
   "ChicagoBears": {
     "abrev": "CHI",
     "off": 76,
     "def": 88,
     "st": 0.0,
-    "style": "Smashmouth"
+    "style": "Spread"
   },
   "DetroitLions": {
     "abrev": "DET",
     "off": 76,
     "def": 80,
     "st": 0.0,
-    "style": "Smashmouth"
+    "style": "Spread"
   },
   "GreenBayPackers": {
     "abrev": "GB",
@@ -214,7 +214,7 @@
     "off": 92,
     "def": 82,
     "st": 0.0,
-    "style": "Air Raid"
+    "style": "Spread"
   },
   "TampaBayBuccaneers": {
     "abrev": "TB",

@@ -13,7 +13,7 @@ public class ShortPass extends Play{
         } else if (randNum <= 12) {
             yardage = calcExp(1+strength, -2);
         } else if (randNum <= 120) {
-            yardage = getRandomInteger(2, 6+strength);
+            yardage = getRandomInteger(1, 6+strength);
         } else if (randNum <= 143) {
             yardage = calcExp(7, 15+strength);
         } else if (randNum <= 199) {

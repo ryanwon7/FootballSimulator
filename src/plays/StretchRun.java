@@ -14,7 +14,7 @@ public class StretchRun extends Play{
         } else if (randNum <= 185) {
             yardage = getRandomInteger(2, (int) (6 + Math.ceil(strength/2)));
         } else if (randNum <= 193) {
-            yardage = getRandomInteger(7, 13+strength);
+            yardage = getRandomInteger(6, 13+strength);
         } else if (randNum <= 197) {
             yardage = calcExp(14, 20+strength);
         } else {

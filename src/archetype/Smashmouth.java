@@ -88,13 +88,13 @@ public class Smashmouth extends Archetype {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=60) {
+        } else if (playNum<=68) {
             gained = StretchRun.run(strength+1);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=75) {
+        } else if (playNum<=70) {
             gained = ShortPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
@@ -102,7 +102,7 @@ public class Smashmouth extends Archetype {
                 System.out.println("It's a short pass for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=95) {
+        } else if (playNum<=92) {
             gained = MediumPass.pass(strength);
             if (gained == 0) {
                 System.out.println("Incomplete medium pass!");

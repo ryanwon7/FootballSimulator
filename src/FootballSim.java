@@ -23,9 +23,9 @@ public class FootballSim {
     private final int quarters = 4;
     private final String[] teams = {"Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills", "Carolina Panthers", "Chicago Bears",
             "Cincinnati Bengals", "Cleveland Browns", "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers", "Houston Texans",
-            "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins",
-            "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets", "Las Vegas Raiders", "Philadelphia Eagles",
-            "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Redskins"};
+            "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins",
+            "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets",  "Philadelphia Eagles",
+            "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington"};
 
     //Variable Initializers
     private int homeScore, awayScore, homeOffStr, awayOffStr;
@@ -37,6 +37,7 @@ public class FootballSim {
     private String possession = "home";
     private int lastYardLine = 25;
     private int homeQ1 = 0, homeQ2 = 0, homeQ3 = 0, homeQ4 = 0, homeOt = 0, awayQ1 = 0, awayQ2 = 0, awayQ3 = 0, awayQ4 = 0, awayOt = 0;
+    private int totHome= 0, totAway= 0, homeWins= 0, awayWins = 0, ties = 0;
 
     //System Print settings
     PrintStream originalStream = System.out;
@@ -62,8 +63,20 @@ public class FootballSim {
         homeTeam = (String) JOptionPane.showInputDialog(null, "Please enter the Home Team.", "Choose Home Team", JOptionPane.PLAIN_MESSAGE, null, teams, teams[0]);
         awayTeam = (String) JOptionPane.showInputDialog(null, "Please enter the Away Team.", "Choose Away Team", JOptionPane.PLAIN_MESSAGE, null, teams, teams[0]);
         setTeamAttr();
-
-        createGame();
+        for(int i = 0; i <1000; i++) {
+            ot = false;
+            createGame();
+            if (homeScore > awayScore) {
+                homeWins++;
+            } else if (homeScore == awayScore) {
+                ties++;
+            } else {
+                awayWins++;
+            }
+            totHome += homeScore;
+            totAway += awayScore;
+        }
+        printSummary();
     }
     private void setTeamAttr() throws IOException, ParseException {
         Object obj = new JSONParser().parse(new FileReader(jsonFile));
@@ -84,8 +97,8 @@ public class FootballSim {
     private void createGame() {
         homeScore = 0;
         awayScore = 0;
-        homeOffStr = (int) Math.ceil((homeOff + 1 - awayDef)/4);
-        awayOffStr = (int) Math.ceil((awayOff - homeDef-1)/4);
+        homeOffStr = (int) Math.round(2+((float)homeOff+0.5 - awayDef)/2);
+        awayOffStr = (int) Math.round(2+((float)awayOff - homeDef-0.5)/2);
         for(int quarter = 1; quarter<=quarters; quarter++) {
             System.out.println("\nStart of the " + quarter + " quarter.");
             if (quarter==3) {
@@ -130,7 +143,6 @@ public class FootballSim {
                 }
             }
         }
-        printSummary();
     }
     private void doDrive(String driveType, int yardLine, int strength) {
         HashMap<String, String> returnData;
@@ -190,27 +202,49 @@ public class FootballSim {
         System.out.println("\nFinal Score:\n" + homeAbrev + " " + homeScore + " - " + awayScore + " " + awayAbrev);
         if (!ot) {
             System.out.println("\nBox Score");
-            System.out.println("-----------------------------------------------------------------------------");
-            System.out.printf("%20s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "FIN");
+            System.out.println("---------------------------------------------------------------------------------");
+            System.out.printf("%25s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "FIN");
             System.out.println();
-            System.out.println("-----------------------------------------------------------------------------");
-            System.out.format("%20s %10s %10s %10s %10s %10s",
-                    homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeScore);
+            System.out.println("---------------------------------------------------------------------------------");
+            System.out.format("%25s %10s %10s %10s %10s %10s",
+                    homeTeam + " (H)", homeQ1, homeQ2, homeQ3, homeQ4, homeScore);
             System.out.println();
-            System.out.format("%20s %10s %10s %10s %10s %10s",
-                    awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayScore);
+            System.out.format("%25s %10s %10s %10s %10s %10s",
+                    awayTeam + " (A)", awayQ1, awayQ2, awayQ3, awayQ4, awayScore);
+            System.out.println();
+            System.out.println("\nMatchup Statistics");
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.printf("%25s %10s %10s %10s %10s %10s", "TEAM", "W", "L", "T", "Avg PTS", "Line");
+            System.out.println();
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.format("%25s %10s %10s %10s %10.1f %10s",
+                    homeTeam + " (H)", homeWins, awayWins, ties, (float)totHome/1000, Math.round((float)totAway/1000-(float)totHome/1000));
+            System.out.println();
+            System.out.format("%25s %10s %10s %10s %10.1f %10s",
+                    awayTeam + " (A)", awayWins, homeWins, ties, (float)totAway/1000, Math.round((float)totHome/1000-(float)totAway/1000));
             System.out.println();
         } else {
             System.out.println("\nBox Score");
-            System.out.println("-----------------------------------------------------------------------------------------");
-            System.out.printf("%20s %10s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "OT", "FIN");
+            System.out.println("---------------------------------------------------------------------------------------------");
+            System.out.printf("%25s %10s %10s %10s %10s %10s %10s", "TEAM", "Q1", "Q2", "Q3", "Q4", "OT", "FIN");
             System.out.println();
-            System.out.println("-----------------------------------------------------------------------------------------");
-            System.out.format("%20s %10s %10s %10s %10s %10s %10s ",
-                    homeTeam, homeQ1, homeQ2, homeQ3, homeQ4, homeOt, homeScore);
+            System.out.println("---------------------------------------------------------------------------------------------");
+            System.out.format("%25s %10s %10s %10s %10s %10s %10s ",
+                    homeTeam + " (H)", homeQ1, homeQ2, homeQ3, homeQ4, homeOt, homeScore);
             System.out.println();
-            System.out.format("%20s %10s %10s %10s %10s %10s %10s",
-                    awayTeam, awayQ1, awayQ2, awayQ3, awayQ4, awayOt, awayScore);
+            System.out.format("%25s %10s %10s %10s %10s %10s %10s",
+                    awayTeam + " (A)", awayQ1, awayQ2, awayQ3, awayQ4, awayOt, awayScore);
+            System.out.println();
+            System.out.println("\nMatchup Statistics");
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.printf("%25s %10s %10s %10s %10s %10s", "TEAM", "W", "L", "T", "Avg PTS", "Line");
+            System.out.println();
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.format("%25s %10s %10s %10s %10.1f %10s",
+                    homeTeam + " (H)", homeWins, awayWins, ties, (float)totHome/1000, Math.round((float)totAway/1000-(float)totHome/1000));
+            System.out.println();
+            System.out.format("%25s %10s %10s %10s %10.1f %10s",
+                    awayTeam  + " (A)", awayWins, homeWins, ties, (float)totAway/1000, Math.round((float)totHome/1000-(float)totAway/1000));
             System.out.println();
         }
 

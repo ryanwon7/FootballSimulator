@@ -81,19 +81,19 @@ public class WestCoast extends Archetype {
     private static int choosePlay(int strength) {
         int gained;
         int playNum = getRandomInteger(1, 100);
-        if (playNum<=10) {
+        if (playNum<=20) {
             gained = SmashRun.run(strength);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a smash run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=40) {
+        } else if (playNum<=50) {
             gained = StretchRun.run(strength+1);
             if (gained != 10000 && gained != 10001) {
                 System.out.println("It's a stretch run for a gain of " + gained);
             }
             return gained;
-        } else if (playNum<=75) {
+        } else if (playNum<=70) {
             gained = ShortPass.pass(strength+1);
             if (gained == 0) {
                 System.out.println("Incomplete short pass!");
